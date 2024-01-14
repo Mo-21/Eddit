@@ -1,4 +1,5 @@
 import ActionsBar from "./ActionsBar";
+import Feed from "./Feed";
 import "./styles/App.css";
 
 function App() {
@@ -6,15 +7,15 @@ function App() {
     <>
       <div className="flex justify-center h-screen w-screen">
         <div className="flex-grow flex max-w-6xl h-full">
-          <div className="flex items-center justify-between h-full card rounded-box">
+          <div className="flex items-center justify-between flex-grow h-full card rounded-box">
             <ActionsBar />
           </div>
           <div className="divider"></div>
-          <div className="grid h-full flex-grow card bg-base-300 rounded-box place-items-center">
-            content
+          <div className="flex items-center justify-between h-full grow-[2] card rounded-box">
+            <Feed />
           </div>
           <div className="divider"></div>
-          <div className="grid h-full flex-grow card bg-base-300 rounded-box place-items-center">
+          <div className="flex items-center justify-between flex-grow h-full card rounded-box">
             content
           </div>
         </div>
