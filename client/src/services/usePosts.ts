@@ -13,9 +13,11 @@ const usePosts = (userId?: string | undefined) => {
 };
 
 interface Post {
-  id: string;
+  id: number;
   content: string;
-  userId: string;
+  userId: number;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export default usePosts;
