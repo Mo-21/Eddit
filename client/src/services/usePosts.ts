@@ -16,6 +16,11 @@ interface Post {
   id: number;
   content: string;
   userId: number;
+  User: {
+    avatar: string | null;
+    username: string;
+    id: number;
+  };
   createdAt: string;
   updatedAt: string;
 }
