@@ -1,4 +1,4 @@
-import usePosts from "../services/usePosts";
+import usePosts from "../hooks/usePosts";
 import defaultAvatar from "../assets/default-twitter-avatar.png";
 import { getTwitterTime } from "twitter-time";
 import { MdMoreHoriz } from "react-icons/md";
@@ -39,7 +39,7 @@ const ExploreFeed = () => {
               <MdMoreHoriz />
             </div>
           </div>
-          <p>{post.content}</p>
+          <p className="text-lg text-white">{post.content}</p>
           <PostActions />
           <div className="divider"></div>
         </div>
@@ -60,14 +60,16 @@ const PostActions = () => {
   const actionsWithClassName = actions.map((action, index) =>
     cloneElement(action, {
       key: index,
-      size: "2rem",
+      size: "1.6rem",
       className: classNames({
-        "hover-effect p-1 hover:bg-sky-700": true,
+        "hover-effect p-1": true,
+        "hover:bg-sky-700": index !== 1 && index !== 2,
         "hover:bg-green-600": index === 1,
         "hover:bg-rose-600": index === 2,
       }),
     })
   );
+
   console.log(actionsWithClassName);
 
   return <div className="flex justify-between">{actionsWithClassName}</div>;
