@@ -6,4 +6,7 @@
   .main-color {
     @apply text-sky-500;
   }
+  .input-field-styled {
+    @apply input input-primary rounded-md focus:border-sky-500 w-full;
+  }
 }
