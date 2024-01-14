@@ -1,8 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
-const usePosts = (userId: string | undefined) => {
-  const fetchPosts = () => axios.get<Post[]>("/").then((res) => res.data);
+const usePosts = (userId?: string | undefined) => {
+  const fetchPosts = () =>
+    axios.get<Post[]>("/api/post/all").then((res) => res.data);
 
   return useQuery<Post[], Error>({
     queryKey: userId ? ["posts", userId] : ["posts"],
