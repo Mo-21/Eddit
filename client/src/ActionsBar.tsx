@@ -26,7 +26,7 @@ const ActionsBar = () => {
     <div className="flex flex-col h-full lg:w-56">
       {actions.map((action, index) => (
         <div
-          className="flex items-center gap-2 p-3 m-1 rounded-3xl text-2xl hover:font-bold hover:cursor-pointer hover:bg-gray-800 transition duration-300 ease-in-out"
+          className="flex items-center p-3 m-1 text-2xl gap-2 hover-effect"
           key={index}
         >
           {action.value} {action.label}
