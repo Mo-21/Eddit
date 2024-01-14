@@ -1,4 +1,3 @@
-import usePosts from "../hooks/usePosts";
 import defaultAvatar from "../assets/default-twitter-avatar.png";
 import { getTwitterTime } from "twitter-time";
 import { MdMoreHoriz } from "react-icons/md";
@@ -10,6 +9,7 @@ import { GoHeart } from "react-icons/go";
 import { TbMessageCircle2 } from "react-icons/tb";
 import { cloneElement } from "react";
 import classNames from "classnames";
+import { usePosts } from "../hooks";
 
 const ExploreFeed = () => {
   const { data: posts, error, isLoading } = usePosts();
