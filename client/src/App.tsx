@@ -1,7 +1,11 @@
 import "./styles/App.css";
 
 function App() {
-  return <></>;
+  return (
+    <>
+      <div className="text-lg p-5">Hello</div>
+    </>
+  );
 }
 
 export default App;
