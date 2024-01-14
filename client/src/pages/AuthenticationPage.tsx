@@ -1,14 +1,9 @@
-import { HTMLAttributes } from "react";
-import { FaApple } from "react-icons/fa";
-import { FcGoogle } from "react-icons/fc";
 import { GiThunderSkull } from "react-icons/gi";
+import SignInModal from "../components/SignInModal";
+import SignUpModal from "../components/SignUpModal";
+import JoinMethods from "../components/JoinMethods";
 
 const AuthenticationPage = () => {
-  const signInMethods: { label: string; value: JSX.Element }[] = [
-    { label: "Sign up with Google", value: <FcGoogle size="1.3rem" /> },
-    { label: "Sign up with Apple", value: <FaApple size="1.3rem" /> },
-  ];
-
   return (
     <div className="h-screen w-screen">
       <div className="flex justify-evenly items-center w-full h-full">
@@ -19,16 +14,7 @@ const AuthenticationPage = () => {
           <h1 className="text-white text-6xl">Happening now</h1>
           <h2 className="text-white text-3xl">Join today.</h2>
           <div className="flex flex-col gap-4 p-2 max-w-xs">
-            {signInMethods.map((method, index) => (
-              <button
-                key={index}
-                className="flex justify-center items-center gap-2 bg-white text-center rounded-full font-bold text-black p-1.5 tooltip"
-                data-tip="This feature is not implemented yet"
-              >
-                {method.label}
-                {method.value}
-              </button>
-            ))}
+            <JoinMethods />
             <div className="divider">or</div>
             <button
               onClick={() => {
@@ -69,38 +55,6 @@ const AuthenticationPage = () => {
       <SignUpModal id="sign_up_modal" />
       <SignInModal id="sign_in_modal" />
     </div>
-  );
-};
-
-const SignUpModal = (id: HTMLAttributes<string | undefined>) => {
-  return (
-    <dialog id="sign_up_modal" className="modal">
-      <div className="modal-box">
-        <h3 className="font-bold text-lg">Hello!</h3>
-        <p className="py-4">Press ESC key or click the button below to close</p>
-        <div className="modal-action">
-          <form method="dialog">
-            <button className="btn">Close</button>
-          </form>
-        </div>
-      </div>
-    </dialog>
-  );
-};
-
-const SignInModal = (id: HTMLAttributes<string | undefined>) => {
-  return (
-    <dialog id="sign_in_modal" className="modal">
-      <div className="modal-box">
-        <h3 className="font-bold text-lg">Hello!</h3>
-        <p className="py-4">Press ESC key or click the button below to close</p>
-        <div className="modal-action">
-          <form method="dialog">
-            <button className="btn">Close</button>
-          </form>
-        </div>
-      </div>
-    </dialog>
   );
 };
 
