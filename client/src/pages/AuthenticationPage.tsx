@@ -1,3 +1,4 @@
+import { HTMLAttributes } from "react";
 import { FaApple } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { GiThunderSkull } from "react-icons/gi";
@@ -29,7 +30,15 @@ const AuthenticationPage = () => {
               </button>
             ))}
             <div className="divider">or</div>
-            <button className="bg-sky-500 text-white p-1.5 text-center rounded-full font-bold">
+            <button
+              onClick={() => {
+                const modal = document.getElementById(
+                  "sign_up_modal"
+                ) as HTMLDialogElement | null;
+                if (modal) modal.showModal();
+              }}
+              className="bg-sky-500 text-white p-1.5 text-center rounded-full font-bold"
+            >
               Create account
             </button>
             <div className="text-xs">
@@ -42,14 +51,56 @@ const AuthenticationPage = () => {
               <p className="text-white font-bold text-lg">
                 Already have an account?
               </p>
-              <button className="btn btn-outline border-gray-500 rounded-full main-color font-bold">
+              <button
+                onClick={() => {
+                  const modal = document.getElementById(
+                    "sign_in_modal"
+                  ) as HTMLDialogElement | null;
+                  if (modal) modal.showModal();
+                }}
+                className="btn btn-outline border-gray-500 rounded-full main-color font-bold"
+              >
                 Sign in
               </button>
             </div>
           </div>
         </div>
       </div>
+      <SignUpModal id="sign_up_modal" />
+      <SignInModal id="sign_in_modal" />
     </div>
+  );
+};
+
+const SignUpModal = (id: HTMLAttributes<string | undefined>) => {
+  return (
+    <dialog id="sign_up_modal" className="modal">
+      <div className="modal-box">
+        <h3 className="font-bold text-lg">Hello!</h3>
+        <p className="py-4">Press ESC key or click the button below to close</p>
+        <div className="modal-action">
+          <form method="dialog">
+            <button className="btn">Close</button>
+          </form>
+        </div>
+      </div>
+    </dialog>
+  );
+};
+
+const SignInModal = (id: HTMLAttributes<string | undefined>) => {
+  return (
+    <dialog id="sign_in_modal" className="modal">
+      <div className="modal-box">
+        <h3 className="font-bold text-lg">Hello!</h3>
+        <p className="py-4">Press ESC key or click the button below to close</p>
+        <div className="modal-action">
+          <form method="dialog">
+            <button className="btn">Close</button>
+          </form>
+        </div>
+      </div>
+    </dialog>
   );
 };
 
