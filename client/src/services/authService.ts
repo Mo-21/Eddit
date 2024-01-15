@@ -13,4 +13,4 @@ export interface Credentials {
   password: string;
 }
 
-export default new APIClient<Credentials, UserResponse>("/api/auth/login");
+export default new APIClient<Credentials, UserResponse>("/auth/login");
