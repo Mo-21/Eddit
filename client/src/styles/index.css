@@ -2,6 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+.radial-progress {
+  --value: 0;
+  --size: 2rem;
+  --thickness: 3px;
+}
+.radial-progress:after {
+  @apply bg-current;
+}
+
 @layer utilities {
   .main-color {
     @apply text-sky-500;
