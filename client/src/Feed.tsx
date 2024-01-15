@@ -3,7 +3,7 @@ import ExploreFeed from "./components/ExploreFeed";
 
 const Feed = () => {
   return (
-    <div role="tablist" className="tabs tabs-bordered w-full">
+    <div role="tablist" className="tabs tabs-bordered w-full overflow-y-auto">
       <AddPostField />
       <ExploreFeed />
     </div>
