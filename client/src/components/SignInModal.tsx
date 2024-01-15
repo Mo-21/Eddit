@@ -4,6 +4,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoginSchemaType, loginSchema } from "../validationSchema";
 import ErrorMessage from "./ErrorMessage";
+import { useLogin } from "../hooks";
 
 const SignInModal = (id: HTMLAttributes<string | undefined>) => {
   return (
@@ -45,14 +46,11 @@ const SignInForm = () => {
     mode: "onChange",
   });
 
-  const onSubmit: SubmitHandler<LoginSchemaType> = async (data, e) => {
-    e?.preventDefault();
-    console.log(data);
-  };
+  const addUser = useLogin();
 
   return (
     <form
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={handleSubmit((data) => addUser.mutate(data))}
       className="flex flex-col w-full items-start gap-6"
     >
       <input
