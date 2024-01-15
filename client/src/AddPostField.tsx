@@ -3,8 +3,9 @@ import mockAvatar from "./assets/mock-user-avatar.jpg";
 import { MdOutlineGifBox } from "react-icons/md";
 import { CiCircleList, CiImageOn, CiLocationOn } from "react-icons/ci";
 import { LuCalendarClock } from "react-icons/lu";
-import React, { cloneElement, useRef, useState } from "react";
+import { FormEvent, cloneElement, useRef, useState } from "react";
 import CharCountProgress from "./components/CharCountProgress";
+import { Post, useCreatePost } from "./hooks";
 
 const AddPostField = () => {
   return (
@@ -29,14 +30,35 @@ const NewPostForm = () => {
   const [showCharCounter, setShowCharCounter] = useState(false);
   const [charCounter, setCharCounter] = useState<number>(0);
 
+  const createPost = useCreatePost(() => {
+    if (ref.current) ref.current.value = "";
+  });
+
+  const handleSubmission = async (e: FormEvent) => {
+    e.preventDefault();
+    if (!ref.current) return;
+    const data: Post = {
+      id: -1,
+      userId: 2,
+      content: ref.current.value,
+      User: { id: 2, avatar: null, username: "Lama" },
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    };
+
+    const res = await createPost.mutateAsync(data);
+    console.log(res);
+  };
+
   return (
-    <form className="flex flex-col w-full">
+    <form onSubmit={handleSubmission} className="flex flex-col w-full">
       <textarea
         className="textarea border-none text-lg resize-y focus:outline-none"
         placeholder="What is happening?!"
         onChange={(e) => setCharCounter(e.target.value.length)}
         onFocus={() => setShowCharCounter(true)}
         onBlur={() => setShowCharCounter(false)}
+        maxLength={280}
         ref={ref}
       />
       <div className="flex justify-between items-center px-4">
