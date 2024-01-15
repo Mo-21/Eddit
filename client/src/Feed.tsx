@@ -1,8 +1,10 @@
+import AddPostField from "./AddPostField";
 import ExploreFeed from "./components/ExploreFeed";
 
 const Feed = () => {
   return (
     <div role="tablist" className="tabs tabs-bordered w-full">
+      <AddPostField />
       <ExploreFeed />
     </div>
   );
