@@ -5,7 +5,7 @@ import JoinMethods from "../components/JoinMethods";
 
 const AuthenticationPage = () => {
   return (
-    <div className="h-screen w-screen">
+    <div className="flex flex-col h-screen w-screen">
       <div className="flex justify-evenly items-center w-full h-full">
         <div>
           <GiThunderSkull size="25rem" />
@@ -52,8 +52,29 @@ const AuthenticationPage = () => {
           </div>
         </div>
       </div>
+      <Footer />
       <SignUpModal id="sign_up_modal" />
       <SignInModal id="sign_in_modal" />
+    </div>
+  );
+};
+
+const Footer = () => {
+  const footerItems = [
+    "Terms of Service",
+    "Privacy Policy",
+    "Cookie Policy",
+    "Accessibility",
+    "Ads info",
+    "More",
+    "© 2024 Pirate Corp.",
+  ];
+
+  return (
+    <div className="flex justify-center gap-12 text-gray-500 text-sm">
+      {footerItems.map((item, index) => (
+        <span className="hover:cursor-pointer hover:link">{item}</span>
+      ))}
     </div>
   );
 };
