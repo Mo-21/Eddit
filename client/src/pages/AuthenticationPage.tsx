@@ -74,7 +74,9 @@ const Footer = () => {
     <footer className="footer footer-center p-4 bg-black text-base-content">
       <aside className="flex text-gray-500">
         {footerItems.map((item, index) => (
-          <span className="hover:cursor-pointer hover:link">{item}</span>
+          <span key={index} className="hover:cursor-pointer hover:link">
+            {item}
+          </span>
         ))}
       </aside>
     </footer>
