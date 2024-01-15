@@ -1,10 +1,11 @@
 import { HTMLAttributes } from "react";
 import JoinMethods from "./JoinMethods";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoginSchemaType, loginSchema } from "../validationSchema";
 import ErrorMessage from "./ErrorMessage";
 import { useLogin } from "../hooks";
+import toast, { Toaster } from "react-hot-toast";
 
 const SignInModal = (id: HTMLAttributes<string | undefined>) => {
   return (
@@ -48,34 +49,40 @@ const SignInForm = () => {
 
   const addUser = useLogin();
 
+  if (addUser.isError && addUser.error) toast.error(addUser.error.message);
+
   return (
-    <form
-      onSubmit={handleSubmit((data) => addUser.mutate(data))}
-      className="flex flex-col w-full items-start gap-6"
-    >
-      <input
-        {...register("email")}
-        placeholder="Email"
-        type="email"
-        className="input-field-styled"
-      />
-      <ErrorMessage children={errors.email?.message} />
-
-      <input
-        {...register("password")}
-        placeholder="Password"
-        type="password"
-        className="input-field-styled"
-      />
-      <ErrorMessage children={errors.password?.message} />
-
-      <button
-        type="submit"
-        className="btn bg-white text-black text-md w-full rounded-full hover:bg-sky-500 mt-4"
+    <>
+      <form
+        onSubmit={handleSubmit(async (data) => await addUser.mutateAsync(data))}
+        className="flex flex-col w-full items-start gap-6"
       >
-        Submit
-      </button>
-    </form>
+        <input
+          {...register("email")}
+          placeholder="Email"
+          type="email"
+          className="input-field-styled"
+        />
+        <ErrorMessage children={errors.email?.message} />
+
+        <input
+          {...register("password")}
+          placeholder="Password"
+          type="password"
+          className="input-field-styled"
+        />
+        <ErrorMessage children={errors.password?.message} />
+
+        <button
+          disabled={addUser.isPending}
+          type="submit"
+          className="btn bg-white text-black text-md w-full rounded-full hover:bg-sky-500 mt-4"
+        >
+          Submit
+        </button>
+      </form>
+      <Toaster />
+    </>
   );
 };
 
