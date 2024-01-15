@@ -1,7 +1,7 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 
-const usePosts = (userId?: string | undefined) => {
+export const useGetAllPosts = (userId?: string | undefined) => {
   const fetchPosts = () =>
     axios.get<Post[]>("/api/post/all").then((res) => res.data);
 
@@ -12,7 +12,35 @@ const usePosts = (userId?: string | undefined) => {
   });
 };
 
-interface Post {
+export const useCreatePost = (clearText: () => void) => {
+  const queryClient = useQueryClient();
+
+  return useMutation<Post, Error, Post, NewPostContext>({
+    mutationKey: ["posts"],
+    mutationFn: (data) =>
+      axios.post<Post>("/api/post/create", data).then((res) => res.data),
+    onMutate: (newPostData) => {
+      const previousPosts = queryClient.getQueryData<Post[]>(["posts"]) || [];
+      queryClient.setQueryData<Post[]>(["posts"], (oldPosts) => [
+        newPostData,
+        ...(oldPosts || []),
+      ]);
+      clearText();
+      return { previousPosts };
+    },
+    onSuccess: (newPost, content) => {
+      queryClient.setQueryData<Post[]>(["posts"], (posts) =>
+        posts?.map((post) => (post === content ? newPost : post))
+      );
+    },
+    onError: (Error, content, ctx) => {
+      if (!ctx) return;
+      return queryClient.setQueryData(["posts"], ctx.previousPosts);
+    },
+  });
+};
+
+export interface Post {
   id: number;
   content: string;
   userId: number;
@@ -25,4 +53,6 @@ interface Post {
   updatedAt: string;
 }
 
-export default usePosts;
+interface NewPostContext {
+  previousPosts: Post[];
+}
