@@ -13,4 +13,4 @@ export interface Post {
   updatedAt: string;
 }
 
-export const createPosts = new APIClient<Post>("/post/create");
+export const createPosts = new APIClient<Post, Post>("/post/create");
