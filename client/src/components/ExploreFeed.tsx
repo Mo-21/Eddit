@@ -20,8 +20,12 @@ const ExploreFeed = () => {
   return (
     <div>
       {posts?.map((post) => (
-        <div className="prose" key={post.id}>
-          <div className="flex gap-2 items-center justify-between max-h-14">
+        <div
+          style={{ borderBottomWidth: "1px" }}
+          className="prose border-gray-700 p-3 min-w-full"
+          key={post.id}
+        >
+          <div className="flex items-center justify-between max-h-12">
             <div className="flex gap-2 items-center">
               <img
                 className="rounded-full w-12"
@@ -41,7 +45,6 @@ const ExploreFeed = () => {
           </div>
           <p className="text-lg text-white">{post.content}</p>
           <PostActions />
-          <div className="divider"></div>
         </div>
       ))}
     </div>
