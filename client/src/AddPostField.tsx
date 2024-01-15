@@ -4,13 +4,9 @@ import { MdOutlineGifBox } from "react-icons/md";
 import { CiCircleList, CiImageOn, CiLocationOn } from "react-icons/ci";
 import { LuCalendarClock } from "react-icons/lu";
 import React, { cloneElement, useRef, useState } from "react";
+import CharCountProgress from "./components/CharCountProgress";
 
 const AddPostField = () => {
-  const ref = useRef<HTMLTextAreaElement>(null);
-
-  const [showCharCounter, setShowCharCounter] = useState(false);
-  const [charCounter, setCharCounter] = useState<number>(0);
-
   return (
     <div style={{ borderBottomWidth: "1px" }} className="border-gray-700 p-3">
       <div className="flex">
@@ -21,38 +17,36 @@ const AddPostField = () => {
             alt="mockAvatar"
           />
         </div>
-        <form className="flex flex-col w-full">
-          <textarea
-            className="textarea border-none text-lg resize-y focus:outline-none"
-            placeholder="What is happening?!"
-            onChange={(e) => setCharCounter(e.target.value.length)}
-            onFocus={() => setShowCharCounter(true)}
-            onBlur={() => setShowCharCounter(false)}
-            ref={ref}
-          />
-          <div className="flex justify-between items-center px-4">
-            <PostFieldActions />
-            <div
-              className="radial-progress mr-5 main-color"
-              style={
-                {
-                  "--value": charCounter,
-                  color: charCounter === 280 ? "red" : "",
-                  visibility: showCharCounter ? "visible" : "hidden",
-                } as React.CSSProperties
-              }
-              role="progressbar"
-            ></div>
-            <button
-              type="submit"
-              className="btn btn-sm rounded-full bg-sky-500"
-            >
-              Post
-            </button>
-          </div>
-        </form>
+        <NewPostForm />
       </div>
     </div>
+  );
+};
+
+const NewPostForm = () => {
+  const ref = useRef<HTMLTextAreaElement>(null);
+
+  const [showCharCounter, setShowCharCounter] = useState(false);
+  const [charCounter, setCharCounter] = useState<number>(0);
+
+  return (
+    <form className="flex flex-col w-full">
+      <textarea
+        className="textarea border-none text-lg resize-y focus:outline-none"
+        placeholder="What is happening?!"
+        onChange={(e) => setCharCounter(e.target.value.length)}
+        onFocus={() => setShowCharCounter(true)}
+        onBlur={() => setShowCharCounter(false)}
+        ref={ref}
+      />
+      <div className="flex justify-between items-center px-4">
+        <PostFieldActions />
+        <CharCountProgress count={charCounter} isShown={showCharCounter} />
+        <button type="submit" className="btn btn-sm rounded-full bg-sky-500">
+          Post
+        </button>
+      </div>
+    </form>
   );
 };
 
