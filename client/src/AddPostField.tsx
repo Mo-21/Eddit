@@ -3,9 +3,14 @@ import mockAvatar from "./assets/mock-user-avatar.jpg";
 import { MdOutlineGifBox } from "react-icons/md";
 import { CiCircleList, CiImageOn, CiLocationOn } from "react-icons/ci";
 import { LuCalendarClock } from "react-icons/lu";
-import { cloneElement } from "react";
+import React, { cloneElement, useRef, useState } from "react";
 
 const AddPostField = () => {
+  const ref = useRef<HTMLTextAreaElement>(null);
+
+  const [showCharCounter, setShowCharCounter] = useState(false);
+  const [charCounter, setCharCounter] = useState<number>(0);
+
   return (
     <div style={{ borderBottomWidth: "1px" }} className="border-gray-700 p-3">
       <div className="flex">
@@ -16,16 +21,36 @@ const AddPostField = () => {
             alt="mockAvatar"
           />
         </div>
-        <div className="flex flex-col w-full">
+        <form className="flex flex-col w-full">
           <textarea
-            className="textarea border-none text-lg resize-none focus:outline-none"
+            className="textarea border-none text-lg resize-y focus:outline-none"
             placeholder="What is happening?!"
+            onChange={(e) => setCharCounter(e.target.value.length)}
+            onFocus={() => setShowCharCounter(true)}
+            onBlur={() => setShowCharCounter(false)}
+            ref={ref}
           />
-          <div className="flex justify-between px-4">
+          <div className="flex justify-between items-center px-4">
             <PostFieldActions />
-            <button className="btn btn-primary">Primary</button>
+            <div
+              className="radial-progress mr-5 main-color"
+              style={
+                {
+                  "--value": charCounter,
+                  color: charCounter === 280 ? "red" : "",
+                  visibility: showCharCounter ? "visible" : "hidden",
+                } as React.CSSProperties
+              }
+              role="progressbar"
+            ></div>
+            <button
+              type="submit"
+              className="btn btn-sm rounded-full bg-sky-500"
+            >
+              Post
+            </button>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   );
@@ -42,7 +67,7 @@ const PostFieldActions = () => {
   ].map((icon, index) =>
     cloneElement(icon, {
       key: index,
-      size: "1.4rem",
+      size: "1.3rem",
       className: "main-color",
     })
   );
