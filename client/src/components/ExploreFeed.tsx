@@ -6,6 +6,7 @@ import { cloneElement } from "react";
 import classNames from "classnames";
 import { useGetAllPosts } from "../hooks";
 import React from "react";
+import { Link } from "react-router-dom";
 
 const ExploreFeed = () => {
   const pageSize = 5;
@@ -33,12 +34,14 @@ const ExploreFeed = () => {
             >
               <div className="flex items-center justify-between max-h-12">
                 <div className="flex gap-2 items-center">
-                  <img
-                    className="rounded-full w-12"
-                    src={defaultAvatar}
-                    alt="defaultAvatar"
-                  />
-                  <div className="font-bold text-white p-1 hover-effect">
+                  <Link to="/profile">
+                    <img
+                      className="rounded-full w-12"
+                      src={defaultAvatar}
+                      alt="defaultAvatar"
+                    />
+                  </Link>
+                  <div className="font-bold text-white p-1">
                     {post.User.username}
                   </div>
                   <div className="flex items-center text-sm text-gray-500">
