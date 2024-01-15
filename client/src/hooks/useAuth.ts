@@ -3,7 +3,7 @@ import { Credentials, UserResponse } from "../services/authService";
 import authService from "../services/authService";
 import { useNavigate } from "react-router-dom";
 
-const useLogin = () => {
+export const useLogin = () => {
   const queryClient = useQueryClient();
 
   const navigate = useNavigate();
@@ -16,5 +16,3 @@ const useLogin = () => {
     },
   });
 };
-
-export default useLogin;

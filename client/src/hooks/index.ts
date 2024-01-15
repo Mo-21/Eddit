@@ -1,2 +1,2 @@
-export { default as useLogin } from "./useLogin";
+export { useLogin } from "./useAuth";
 export * from "./usePosts";
