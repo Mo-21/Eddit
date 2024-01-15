@@ -5,43 +5,70 @@ import { getTwitterTime } from "twitter-time";
 import { cloneElement } from "react";
 import classNames from "classnames";
 import { useGetAllPosts } from "../hooks";
+import React from "react";
 
 const ExploreFeed = () => {
-  const { data: posts, error, isLoading } = useGetAllPosts();
+  const pageSize = 5;
+  const {
+    data,
+    hasNextPage,
+    error,
+    isLoading,
+    fetchNextPage,
+    isFetchingNextPage,
+  } = useGetAllPosts({ pageSize });
 
+  console.log({ hasNextPage });
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>{error.message}</div>;
 
   return (
     <div>
-      {posts?.map((post) => (
-        <div
-          style={{ borderBottomWidth: "1px" }}
-          className="prose border-gray-700 p-3 min-w-full"
-          key={post.id}
-        >
-          <div className="flex items-center justify-between max-h-12">
-            <div className="flex gap-2 items-center">
-              <img
-                className="rounded-full w-12"
-                src={defaultAvatar}
-                alt="defaultAvatar"
-              />
-              <div className="font-bold text-white p-1 hover-effect">
-                {post.User.username}
+      {data?.pages.map((page) => (
+        <React.Fragment>
+          {page.posts.map((post) => (
+            <div
+              style={{ borderBottomWidth: "1px" }}
+              className="prose border-gray-700 p-3 min-w-full"
+              key={post.id}
+            >
+              <div className="flex items-center justify-between max-h-12">
+                <div className="flex gap-2 items-center">
+                  <img
+                    className="rounded-full w-12"
+                    src={defaultAvatar}
+                    alt="defaultAvatar"
+                  />
+                  <div className="font-bold text-white p-1 hover-effect">
+                    {post.User.username}
+                  </div>
+                  <div className="flex items-center text-sm text-gray-500">
+                    @{post.User.username} <LuDot />{" "}
+                    {getTwitterTime(post.createdAt)}
+                  </div>
+                </div>
+                <div className="hover-effect p-1 text-2xl">
+                  <MdMoreHoriz />
+                </div>
               </div>
-              <div className="flex items-center text-sm text-gray-500">
-                @{post.User.username} <LuDot /> {getTwitterTime(post.createdAt)}
-              </div>
+              <p className="text-lg text-white">{post.content}</p>
+              <PostActions />
             </div>
-            <div className="hover-effect p-1 text-2xl">
-              <MdMoreHoriz />
-            </div>
-          </div>
-          <p className="text-lg text-white">{post.content}</p>
-          <PostActions />
-        </div>
+          ))}
+        </React.Fragment>
       ))}
+
+      {hasNextPage && (
+        <div className="flex">
+          <button
+            disabled={isFetchingNextPage}
+            className="btn flex-grow"
+            onClick={() => fetchNextPage()}
+          >
+            {isFetchingNextPage ? "Loading..." : "Load More"}
+          </button>
+        </div>
+      )}
     </div>
   );
 };
