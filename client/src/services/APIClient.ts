@@ -7,10 +7,6 @@ const axiosInstance = axios.create({
 class APIClient<T> {
   constructor(private endpoint: string) {}
 
-  getAllPosts = () => {
-    return axiosInstance.get<T>(this.endpoint).then((res) => res.data);
-  };
-
   createPost = (data: T) => {
     return axiosInstance.post<T>(this.endpoint, data).then((res) => res.data);
   };
