@@ -71,11 +71,13 @@ const Footer = () => {
   ];
 
   return (
-    <div className="flex justify-center gap-12 text-gray-500 text-sm">
-      {footerItems.map((item, index) => (
-        <span className="hover:cursor-pointer hover:link">{item}</span>
-      ))}
-    </div>
+    <footer className="footer footer-center p-4 bg-black text-base-content">
+      <aside className="flex text-gray-500">
+        {footerItems.map((item, index) => (
+          <span className="hover:cursor-pointer hover:link">{item}</span>
+        ))}
+      </aside>
+    </footer>
   );
 };
 
