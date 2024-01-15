@@ -1,12 +1,5 @@
-import { CgMoreO } from "react-icons/cg";
-import { CiBookmark } from "react-icons/ci";
-import { GiThunderSkull } from "react-icons/gi";
-import { GoHomeFill } from "react-icons/go";
-import { GrNotification } from "react-icons/gr";
-import { HiOutlineEnvelope } from "react-icons/hi2";
-import { IoPersonOutline, IoSearchOutline } from "react-icons/io5";
-import { MdOutlineWorkspacePremium } from "react-icons/md";
-import { RiGroupLine } from "react-icons/ri";
+// prettier-ignore
+import { CgMoreO, CiBookmark, GiThunderSkull, GoHomeFill, GrNotification, HiOutlineEnvelope, IoPersonOutline, IoSearchOutline, MdOutlineWorkspacePremium, RiGroupLine } from "./assets";
 
 const ActionsBar = () => {
   const actions: { label: string; value: JSX.Element }[] = [

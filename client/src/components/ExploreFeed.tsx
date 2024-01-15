@@ -1,12 +1,7 @@
+// prettier-ignore
+import { CgSoftwareUpload, FaRetweet, GoHeart, IoIosStats, LuDot, MdMoreHoriz, TbMessageCircle2 } from "../assets";
 import defaultAvatar from "../assets/default-twitter-avatar.png";
 import { getTwitterTime } from "twitter-time";
-import { MdMoreHoriz } from "react-icons/md";
-import { LuDot } from "react-icons/lu";
-import { CgSoftwareUpload } from "react-icons/cg";
-import { FaRetweet } from "react-icons/fa";
-import { IoIosStats } from "react-icons/io";
-import { GoHeart } from "react-icons/go";
-import { TbMessageCircle2 } from "react-icons/tb";
 import { cloneElement } from "react";
 import classNames from "classnames";
 import { useGetAllPosts } from "../hooks";

@@ -1,8 +1,6 @@
-import { BsEmojiSmile } from "react-icons/bs";
+// prettier-ignore
+import { BsEmojiSmile, CiCircleList, CiImageOn, CiLocationOn, LuCalendarClock, MdOutlineGifBox } from "./assets";
 import mockAvatar from "./assets/mock-user-avatar.jpg";
-import { MdOutlineGifBox } from "react-icons/md";
-import { CiCircleList, CiImageOn, CiLocationOn } from "react-icons/ci";
-import { LuCalendarClock } from "react-icons/lu";
 import { FormEvent, cloneElement, useRef, useState } from "react";
 import CharCountProgress from "./components/CharCountProgress";
 import { Post, useCreatePost } from "./hooks";
