@@ -3,8 +3,9 @@ import { BsEmojiSmile, CiCircleList, CiImageOn, CiLocationOn, LuCalendarClock, M
 import mockAvatar from "./assets/mock-user-avatar.jpg";
 import { FormEvent, cloneElement, useRef, useState } from "react";
 import CharCountProgress from "./components/CharCountProgress";
-import { Post, useCreatePost } from "./hooks";
+import { useCreatePost } from "./hooks";
 import toast, { Toaster } from "react-hot-toast";
+import { Post } from "./services/postService";
 
 const AddPostField = () => {
   return (
