@@ -9,10 +9,10 @@ import { GoHeart } from "react-icons/go";
 import { TbMessageCircle2 } from "react-icons/tb";
 import { cloneElement } from "react";
 import classNames from "classnames";
-import { usePosts } from "../hooks";
+import { useGetAllPosts } from "../hooks";
 
 const ExploreFeed = () => {
-  const { data: posts, error, isLoading } = usePosts();
+  const { data: posts, error, isLoading } = useGetAllPosts();
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>{error.message}</div>;
@@ -72,8 +72,6 @@ const PostActions = () => {
       }),
     })
   );
-
-  console.log(actionsWithClassName);
 
   return <div className="flex justify-between">{actionsWithClassName}</div>;
 };
