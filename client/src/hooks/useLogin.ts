@@ -5,8 +5,8 @@ const useLogin = () => {
   const queryClient = useQueryClient();
 
   return useMutation<UserResponse, Error, Credentials>({
-    mutationFn: (credentials: Credentials) =>
-      axios.post<UserResponse>("/", credentials).then((res) => res.data),
+    mutationFn: (data: Credentials) =>
+      axios.post<UserResponse>("/api/auth/login", data).then((res) => res.data),
     onSuccess: (userResponse, credentials) => {
       queryClient.setQueryData<UserResponse>(["user"], userResponse);
     },
