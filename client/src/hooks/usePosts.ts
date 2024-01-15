@@ -1,24 +1,24 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
+import APIClient from "../services/APIClient";
 
 export const useGetAllPosts = (userId?: string | undefined) => {
-  const fetchPosts = () =>
-    axios.get<Post[]>("/api/post/all").then((res) => res.data);
+  const api = new APIClient<Post[]>("/post/all");
 
   return useQuery<Post[], Error>({
     queryKey: userId ? ["posts", userId] : ["posts"],
-    queryFn: fetchPosts,
+    queryFn: api.getAllPosts,
     staleTime: 10 * 1000,
   });
 };
 
 export const useCreatePost = (clearText: () => void) => {
+  const api = new APIClient<Post>("/post/create");
   const queryClient = useQueryClient();
 
   return useMutation<Post, Error, Post, NewPostContext>({
     mutationKey: ["posts"],
-    mutationFn: (data) =>
-      axios.post<Post>("/api/post/create", data).then((res) => res.data),
+    mutationFn: api.createPost,
     onMutate: (newPostData) => {
       const previousPosts = queryClient.getQueryData<Post[]>(["posts"]) || [];
       queryClient.setQueryData<Post[]>(["posts"], (oldPosts) => [
