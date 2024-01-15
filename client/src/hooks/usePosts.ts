@@ -1,13 +1,40 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { Post, getPosts, createPosts } from "../services/postService";
+// prettier-ignore
+import { useInfiniteQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { Post, createPosts } from "../services/postService";
+import axios from "axios";
 
-export const useGetAllPosts = (userId?: string | undefined) => {
-  return useQuery<Post[], Error>({
-    queryKey: userId ? ["posts", userId] : ["posts"],
-    queryFn: getPosts.getAllPosts,
-    staleTime: 10 * 1000,
+interface NewPostContext {
+  previousPosts: Post[];
+}
+
+interface PostQuery {
+  pageSize: number;
+}
+
+interface InfinitePosts {
+  posts: Post[];
+  hasMore: boolean;
+}
+
+export const useGetAllPosts = (query: PostQuery) =>
+  useInfiniteQuery<InfinitePosts, Error>({
+    queryKey: ["posts"],
+    queryFn: async ({ pageParam }) => {
+      return await axios
+        .get("/api/post/all", {
+          params: {
+            page: pageParam,
+            pageSize: query.pageSize,
+          },
+        })
+        .then((res) => res.data);
+    },
+    initialPageParam: 1,
+    staleTime: 1 * 60 * 1000, // 1 minute
+    getNextPageParam: (lastPage, allPages) => {
+      return lastPage.hasMore ? allPages.length + 1 : undefined;
+    },
   });
-};
 
 export const useCreatePost = (clearText: () => void) => {
   const queryClient = useQueryClient();
@@ -35,7 +62,3 @@ export const useCreatePost = (clearText: () => void) => {
     },
   });
 };
-
-interface NewPostContext {
-  previousPosts: Post[];
-}
