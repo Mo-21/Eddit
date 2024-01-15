@@ -6,6 +6,7 @@ import { LuCalendarClock } from "react-icons/lu";
 import { FormEvent, cloneElement, useRef, useState } from "react";
 import CharCountProgress from "./components/CharCountProgress";
 import { Post, useCreatePost } from "./hooks";
+import toast, { Toaster } from "react-hot-toast";
 
 const AddPostField = () => {
   return (
@@ -46,10 +47,14 @@ const NewPostForm = () => {
       updatedAt: new Date().toISOString(),
     };
 
-    const res = await createPost.mutateAsync(data);
-    console.log(res);
+    try {
+      await createPost.mutateAsync(data);
+    } catch (error) {
+      throw new Error("Something went wrong");
+    }
   };
 
+  if (createPost.isError && createPost.error) toast(createPost.error.message);
   return (
     <form onSubmit={handleSubmission} className="flex flex-col w-full">
       <textarea
@@ -68,6 +73,7 @@ const NewPostForm = () => {
           Post
         </button>
       </div>
+      <Toaster />
     </form>
   );
 };
