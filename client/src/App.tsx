@@ -1,7 +1,6 @@
 import ActionsBar from "./ActionsBar";
 import Feed from "./Feed";
 import RightBar from "./RightBar";
-import AuthenticationPage from "./pages/AuthenticationPage";
 import "./styles/App.css";
 
 function App() {
