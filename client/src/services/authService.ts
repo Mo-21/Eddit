@@ -13,4 +13,15 @@ export interface Credentials {
   password: string;
 }
 
-export default new APIClient<Credentials, UserResponse>("/auth/login");
+export interface RegistrationData {
+  username: string;
+  email: string;
+  avatar?: string | null;
+  password: string;
+}
+
+export const login = new APIClient<Credentials, UserResponse>("/auth/login")
+  .logIn;
+export const register = new APIClient<RegistrationData, UserResponse>(
+  "/auth/register"
+).register;

@@ -14,6 +14,10 @@ class APIClient<T, R> {
   logIn = (data: T) => {
     return axiosInstance.post<R>(this.endpoint, data).then((res) => res.data);
   };
+
+  register = (data: T) => {
+    return axiosInstance.post<R>(this.endpoint, data).then((res) => res.data);
+  };
 }
 
 export default APIClient;
