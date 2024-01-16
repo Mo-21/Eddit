@@ -1,8 +1,10 @@
-import { HTMLAttributes } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { HTMLAttributes, useState } from "react";
+import { useForm } from "react-hook-form";
 import { SignUpSchemaType, signUpSchema } from "../validationSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import ErrorMessage from "./ErrorMessage";
+import { useRegister } from "../hooks/useAuth";
+import toast, { Toaster } from "react-hot-toast";
 
 const SignUpModal = (id: HTMLAttributes<string | undefined>) => {
   return (
@@ -40,58 +42,69 @@ const SignUpForm = () => {
     mode: "onChange",
   });
 
-  const onSubmit: SubmitHandler<SignUpSchemaType> = (data, e) => {};
+  const registerUser = useRegister();
+
+  if (registerUser.isError && registerUser.error)
+    toast.error(registerUser.error.message);
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col w-full items-start gap-6"
-    >
-      <input
+    <>
+      <Toaster />
+      <form
+        onSubmit={handleSubmit(
+          async (data) => await registerUser.mutateAsync(data)
+        )}
+        className="flex flex-col w-full items-start gap-6"
+      >
+        {/* <input
         {...register("avatar")}
         type="file"
         className="file-input w-full max-w-xs"
-      />
+      /> */}
 
-      <input
-        {...register("username")}
-        placeholder="Username"
-        type="text"
-        className="input-field-styled"
-      />
-      <ErrorMessage children={errors.email?.message} />
+        <input
+          {...register("username")}
+          placeholder="Username"
+          type="text"
+          className="input-field-styled"
+        />
+        <ErrorMessage children={errors.username?.message} />
 
-      <input
-        {...register("email")}
-        placeholder="Email"
-        type="email"
-        className="input-field-styled"
-      />
-      <ErrorMessage children={errors.email?.message} />
+        <input
+          {...register("email")}
+          placeholder="Email"
+          type="email"
+          className="input-field-styled"
+        />
+        <ErrorMessage children={errors.email?.message} />
 
-      <input
-        {...register("password")}
-        placeholder="Password"
-        type="password"
-        className="input-field-styled"
-      />
-      <ErrorMessage children={errors.password?.message} />
+        <input
+          {...register("password")}
+          placeholder="Password"
+          type="password"
+          className="input-field-styled"
+        />
+        <ErrorMessage children={errors.password?.message} />
 
-      <input
-        {...register("passwordConfirmation")}
-        placeholder="Confirm password"
-        type="password"
-        className="input-field-styled"
-      />
-      <ErrorMessage children={errors.email?.message} />
+        <input
+          {...register("passwordConfirmation")}
+          placeholder="Confirm password"
+          type="password"
+          className="input-field-styled"
+        />
+        {errors.passwordConfirmation && (
+          <ErrorMessage children={errors.passwordConfirmation.message} />
+        )}
 
-      <button
-        type="submit"
-        className="btn bg-white text-black text-md w-full rounded-full hover:bg-sky-500 mt-4"
-      >
-        Submit
-      </button>
-    </form>
+        <button
+          disabled={registerUser.isPending}
+          type="submit"
+          className="btn bg-white text-black text-md w-full rounded-full hover:bg-sky-500 mt-4"
+        >
+          Submit
+        </button>
+      </form>
+    </>
   );
 };
 
