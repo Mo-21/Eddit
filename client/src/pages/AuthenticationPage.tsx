@@ -72,7 +72,7 @@ const Footer = () => {
 
   return (
     <footer className="footer footer-center p-4 bg-black text-base-content">
-      <aside className="flex text-gray-500">
+      <aside className="flex justify-evenly w-full text-gray-500">
         {footerItems.map((item, index) => (
           <span key={index} className="hover:cursor-pointer hover:link">
             {item}
