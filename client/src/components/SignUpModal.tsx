@@ -1,4 +1,4 @@
-import { HTMLAttributes, useState } from "react";
+import { HTMLAttributes } from "react";
 import { useForm } from "react-hook-form";
 import { SignUpSchemaType, signUpSchema } from "../validationSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
