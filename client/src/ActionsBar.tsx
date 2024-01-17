@@ -1,7 +1,10 @@
 // prettier-ignore
 import { CgMoreO, CiBookmark, GiThunderSkull, GoHomeFill, GrNotification, HiOutlineEnvelope, IoPersonOutline, IoSearchOutline, MdOutlineWorkspacePremium, RiGroupLine } from "./assets";
+import useAuth from "./services/store";
 
 const ActionsBar = () => {
+  const { user } = useAuth();
+
   const actions: { label: string; value: JSX.Element }[] = [
     { label: "", value: <GiThunderSkull size="2.5rem" /> },
     { label: "Home", value: <GoHomeFill /> },
@@ -25,7 +28,10 @@ const ActionsBar = () => {
           {action.value} {action.label}
         </div>
       ))}
-      <button className="btn font-bold bg-sky-500 rounded-full mt-5 btn-xs sm:btn-sm md:btn-md lg:btn-md lg:text-xl hover:bg-sky-800">
+      <button
+        disabled={!user}
+        className="btn font-bold bg-sky-500 rounded-full mt-5 btn-xs sm:btn-sm md:btn-md lg:btn-md lg:text-xl hover:bg-sky-800"
+      >
         Post
       </button>
     </div>

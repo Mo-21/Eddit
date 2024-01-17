@@ -1,9 +1,12 @@
 import { Link } from "react-router-dom";
 import { IoPersonOutline, MdMoreHoriz, TbLogout2 } from "../assets";
 import { useLogout } from "../hooks/useAuth";
+import useAuth from "../services/store";
 
 const UserActions = () => {
   const { queryClient, removeUser } = useLogout();
+  const { user } = useAuth();
+  if (!user) return null;
 
   return (
     <div className="dropdown dropdown-top w-full mb-3 mr-2">

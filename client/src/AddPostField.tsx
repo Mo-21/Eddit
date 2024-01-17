@@ -6,8 +6,12 @@ import CharCountProgress from "./components/CharCountProgress";
 import { useCreatePost } from "./hooks";
 import toast, { Toaster } from "react-hot-toast";
 import { Post } from "./services/postService";
+import useAuth from "./services/store";
 
 const AddPostField = () => {
+  const { user } = useAuth();
+  if (!user) return null;
+
   return (
     <div style={{ borderBottomWidth: "1px" }} className="border-gray-700 p-3">
       <div className="flex">
