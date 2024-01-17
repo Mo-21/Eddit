@@ -11,7 +11,7 @@ import { Link } from "react-router-dom";
 const ExploreFeed = () => {
   const pageSize = 5;
   const {
-    data,
+    data: posts,
     hasNextPage,
     error,
     isLoading,
@@ -24,40 +24,35 @@ const ExploreFeed = () => {
 
   return (
     <div>
-      {data?.pages.map((page, index) => (
-        <React.Fragment key={index}>
-          {page.posts.map((post) => (
-            <div
-              style={{ borderBottomWidth: "1px" }}
-              className="prose border-gray-700 p-3 min-w-full"
-              key={post.id}
-            >
-              <div className="flex items-center justify-between max-h-12">
-                <div className="flex gap-2 items-center">
-                  <Link to="/profile">
-                    <img
-                      className="rounded-full w-12"
-                      src={defaultAvatar}
-                      alt="defaultAvatar"
-                    />
-                  </Link>
-                  <div className="font-bold text-white p-1">
-                    {post.User.username}
-                  </div>
-                  <div className="flex items-center text-sm text-gray-500">
-                    @{post.User.username} <LuDot />{" "}
-                    {getTwitterTime(post.createdAt)}
-                  </div>
-                </div>
-                <div className="hover-effect p-1 text-2xl">
-                  <MdMoreHoriz />
-                </div>
+      {posts?.map((post, index) => (
+        <div
+          style={{ borderBottomWidth: "1px" }}
+          className="prose border-gray-700 p-3 min-w-full"
+          key={post.id}
+        >
+          <div className="flex items-center justify-between max-h-12">
+            <div className="flex gap-2 items-center">
+              <Link to="/profile">
+                <img
+                  className="rounded-full w-12"
+                  src={defaultAvatar}
+                  alt="defaultAvatar"
+                />
+              </Link>
+              <div className="font-bold text-white p-1">
+                {post.User.username}
               </div>
-              <p className="text-lg text-white">{post.content}</p>
-              <PostActions />
+              <div className="flex items-center text-sm text-gray-500">
+                @{post.User.username} <LuDot /> {getTwitterTime(post.createdAt)}
+              </div>
             </div>
-          ))}
-        </React.Fragment>
+            <div className="hover-effect p-1 text-2xl">
+              <MdMoreHoriz />
+            </div>
+          </div>
+          <p className="text-lg text-white">{post.content}</p>
+          <PostActions />
+        </div>
       ))}
 
       {hasNextPage && (
