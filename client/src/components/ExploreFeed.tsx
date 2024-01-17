@@ -7,6 +7,7 @@ import classNames from "classnames";
 import { useGetAllPosts } from "../hooks";
 import React from "react";
 import { Link } from "react-router-dom";
+import useAuth from "../services/store";
 
 const ExploreFeed = () => {
   const pageSize = 5;
@@ -19,9 +20,11 @@ const ExploreFeed = () => {
     isFetchingNextPage,
   } = useGetAllPosts({ pageSize });
 
+  const { user } = useAuth();
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>{error.message}</div>;
 
+  console.log(`User in store: ${user?.email}`);
   return (
     <div>
       {data?.pages.map((page, index) => (

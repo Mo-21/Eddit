@@ -21,11 +21,14 @@
     "react-hot-toast": "^2.4.1",
     "react-icons": "^5.0.1",
     "react-router-dom": "^6.21.2",
+    "simple-zustand-devtools": "1.1.0",
     "twitter-time": "^1.0.0",
-    "zod": "^3.22.4"
+    "zod": "^3.22.4",
+    "zustand": "4.3.7"
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.10",
+    "@types/node": "^20.11.5",
     "@types/react": "^18.2.43",
     "@types/react-dom": "^18.2.17",
     "@typescript-eslint/eslint-plugin": "^6.14.0",
