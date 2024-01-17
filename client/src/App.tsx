@@ -1,6 +1,7 @@
 import ActionsBar from "./ActionsBar";
 import Feed from "./Feed";
 import RightBar from "./RightBar";
+import UserActions from "./components/UserActions";
 import "./styles/App.css";
 
 function App() {
@@ -12,6 +13,7 @@ function App() {
           className="flex items-center justify-between flex-grow h-full card rounded-box border-gray-700"
         >
           <ActionsBar />
+          <UserActions />
         </div>
         <div className="divider"></div>
         <div className="flex items-center justify-between h-full grow-[3] card rounded-box">
