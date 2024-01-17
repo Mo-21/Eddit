@@ -2,9 +2,14 @@ import ActionsBar from "./ActionsBar";
 import Feed from "./Feed";
 import RightBar from "./RightBar";
 import UserActions from "./components/UserActions";
+import useAuth from "./services/store";
 import "./styles/App.css";
+import AuthWall from "./components/AuthWall";
 
 function App() {
+  const { user } = useAuth();
+
+  if (!user) return <AuthWall />;
   return (
     <div className="flex justify-center h-screen w-scree">
       <div className="flex-grow flex max-w-6xl h-full">
