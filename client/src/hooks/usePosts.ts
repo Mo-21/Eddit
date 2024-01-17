@@ -16,8 +16,13 @@ interface InfinitePosts {
   hasMore: boolean;
 }
 
+interface QueryData {
+  pageParam: number[];
+  pages: InfinitePosts[];
+}
+
 export const useGetAllPosts = (query: PostQuery) =>
-  useInfiniteQuery<InfinitePosts, Error>({
+  useInfiniteQuery<InfinitePosts, Error, Post[]>({
     queryKey: ["posts"],
     queryFn: async ({ pageParam }) => {
       return await axios
@@ -34,6 +39,7 @@ export const useGetAllPosts = (query: PostQuery) =>
     getNextPageParam: (lastPage, allPages) => {
       return lastPage.hasMore ? allPages.length + 1 : undefined;
     },
+    select: (data) => data.pages.flatMap((page) => page.posts),
   });
 
 export const useCreatePost = (clearText: () => void) => {
@@ -42,23 +48,63 @@ export const useCreatePost = (clearText: () => void) => {
   return useMutation<Post, Error, Post, NewPostContext>({
     mutationKey: ["posts"],
     mutationFn: createPosts.createPost,
-    onMutate: (newPostData) => {
-      const previousPosts = queryClient.getQueryData<Post[]>(["posts"]) || [];
-      queryClient.setQueryData<Post[]>(["posts"], (oldPosts) => [
-        newPostData,
-        ...(oldPosts || []),
-      ]);
+    onMutate: async (newPostData) => {
+      const previousData = queryClient.getQueryData<QueryData>(["posts"]) || {
+        pageParam: [1],
+        pages: [{ posts: [], hasMore: true }],
+      };
+      const updatedData: QueryData = {
+        ...previousData,
+        pages: [
+          {
+            posts: [newPostData, ...previousData.pages[0].posts],
+            hasMore: previousData.pages[0].hasMore,
+          },
+          ...previousData.pages.slice(1), // Keep the rest of the pages unchanged
+        ],
+      };
+      queryClient.setQueryData<QueryData>(["posts"], updatedData);
       clearText();
-      return { previousPosts };
+      // Return the previous state for potential rollback on error
+      return { previousPosts: previousData.pages[0].posts };
     },
     onSuccess: (newPost, content) => {
-      queryClient.setQueryData<Post[]>(["posts"], (posts) =>
-        posts?.map((post) => (post === content ? newPost : post))
-      );
+      queryClient.setQueryData<QueryData>(["posts"], (data) => {
+        if (!data) return data;
+
+        const updatedData: QueryData = {
+          ...data,
+          pages: [
+            {
+              posts: data.pages[0].posts.map((post) =>
+                post.id === content.id ? newPost : post
+              ),
+              hasMore: data.pages[0].hasMore,
+            },
+            ...data.pages.slice(1), // Keep the rest of the pages unchanged
+          ],
+        };
+
+        return updatedData;
+      });
     },
-    onError: (Error, content, ctx) => {
+    onError: (error, content, ctx) => {
       if (!ctx) return;
-      return queryClient.setQueryData(["posts"], ctx.previousPosts);
+      queryClient.setQueryData<QueryData>(["posts"], (data) => {
+        if (!data) return data;
+        const previousData: QueryData = {
+          ...data,
+          pages: [
+            {
+              posts: ctx.previousPosts,
+              hasMore: data.pages[0].hasMore,
+            },
+            ...data.pages.slice(1),
+          ],
+        };
+
+        return previousData;
+      });
     },
   });
 };
