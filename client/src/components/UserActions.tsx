@@ -1,4 +1,5 @@
-import { MdMoreHoriz } from "../assets";
+import { Link } from "react-router-dom";
+import { IoPersonOutline, MdMoreHoriz, TbLogout2 } from "../assets";
 
 const UserActions = () => {
   return (
@@ -24,13 +25,19 @@ const UserActions = () => {
       </div>
       <ul
         tabIndex={0}
-        className="dropdown-content w-full z-[1] menu p-2 mb-2 shadow rounded-box box"
+        className="dropdown-content w-full z-[1] menu p-2 mb-2 shadow rounded-box box text-lg"
       >
         <li>
-          <a>Item 1</a>
+          <Link className="flex items-center text-red-500" to="/auth">
+            <TbLogout2 />
+            Logout
+          </Link>
         </li>
         <li>
-          <a>Item 2</a>
+          <Link to="/profile">
+            <IoPersonOutline />
+            Profile
+          </Link>
         </li>
       </ul>
     </div>

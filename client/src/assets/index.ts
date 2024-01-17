@@ -18,3 +18,4 @@ export { HiOutlineEnvelope } from "react-icons/hi2";
 export { IoPersonOutline, IoSearchOutline } from "react-icons/io5";
 export { MdOutlineWorkspacePremium } from "react-icons/md";
 export { RiGroupLine } from "react-icons/ri";
+export { TbLogout2 } from "react-icons/tb";
