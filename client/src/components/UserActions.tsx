@@ -1,7 +1,10 @@
 import { Link } from "react-router-dom";
 import { IoPersonOutline, MdMoreHoriz, TbLogout2 } from "../assets";
+import { useLogout } from "../hooks/useAuth";
 
 const UserActions = () => {
+  const { queryClient, removeUser } = useLogout();
+
   return (
     <div className="dropdown dropdown-top w-full mb-3 mr-2">
       <div
@@ -28,7 +31,14 @@ const UserActions = () => {
         className="dropdown-content w-full z-[1] menu p-2 mb-2 shadow rounded-box box text-lg"
       >
         <li>
-          <Link className="flex items-center text-red-500" to="/auth">
+          <Link
+            onClick={() => {
+              queryClient.clear();
+              removeUser();
+            }}
+            className="flex items-center text-red-500"
+            to="/auth"
+          >
             <TbLogout2 />
             Logout
           </Link>

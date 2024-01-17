@@ -39,3 +39,9 @@ export const useRegister = () => {
     },
   });
 };
+
+export const useLogout = () => {
+  const queryClient = useQueryClient();
+  const { removeUser } = useAuth();
+  return { queryClient, removeUser };
+};
