@@ -19,3 +19,5 @@ export { IoPersonOutline, IoSearchOutline } from "react-icons/io5";
 export { MdOutlineWorkspacePremium } from "react-icons/md";
 export { RiGroupLine } from "react-icons/ri";
 export { TbLogout2 } from "react-icons/tb";
+export { MdDeleteOutline } from "react-icons/md";
+export { FaRegEdit } from "react-icons/fa";

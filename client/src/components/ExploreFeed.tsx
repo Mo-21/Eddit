@@ -1,12 +1,12 @@
 // prettier-ignore
-import { CgSoftwareUpload, FaRetweet, GoHeart, IoIosStats, LuDot, MdMoreHoriz, TbMessageCircle2 } from "../assets";
+import { CgSoftwareUpload, FaRetweet, GoHeart, IoIosStats, LuDot, TbMessageCircle2 } from "../assets";
 import defaultAvatar from "../assets/default-twitter-avatar.png";
 import { getTwitterTime } from "twitter-time";
 import { cloneElement } from "react";
 import classNames from "classnames";
 import { useGetAllPosts } from "../hooks";
-import React from "react";
 import { Link } from "react-router-dom";
+import PostDropdown from "./PostDropdown";
 
 const ExploreFeed = () => {
   const pageSize = 5;
@@ -46,8 +46,8 @@ const ExploreFeed = () => {
                 @{post.User.username} <LuDot /> {getTwitterTime(post.createdAt)}
               </div>
             </div>
-            <div className="hover-effect p-1 text-2xl">
-              <MdMoreHoriz />
+            <div className="hover-effect text-2xl">
+              <PostDropdown />
             </div>
           </div>
           <p className="text-lg text-white">{post.content}</p>
