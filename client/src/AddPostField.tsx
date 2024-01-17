@@ -1,12 +1,13 @@
 // prettier-ignore
 import { BsEmojiSmile, CiCircleList, CiImageOn, CiLocationOn, LuCalendarClock, MdOutlineGifBox } from "./assets";
-import mockAvatar from "./assets/mock-user-avatar.jpg";
-import { FormEvent, cloneElement, useRef, useState } from "react";
+import defaultAvatar from "./assets/default-twitter-avatar.png";
+import { FormEvent, cloneElement, useEffect, useRef, useState } from "react";
 import CharCountProgress from "./components/CharCountProgress";
 import { useCreatePost } from "./hooks";
 import toast, { Toaster } from "react-hot-toast";
 import { Post } from "./services/postService";
 import useAuth from "./services/store";
+import { UserResponse } from "./services/authService";
 
 const AddPostField = () => {
   const { user } = useAuth();
@@ -18,17 +19,17 @@ const AddPostField = () => {
         <div className="user-info">
           <img
             className="rounded-full w-12"
-            src={mockAvatar}
-            alt="mockAvatar"
+            src={user.avatar || defaultAvatar}
+            alt="defaultAvatar"
           />
         </div>
-        <NewPostForm />
+        <NewPostForm user={user} />
       </div>
     </div>
   );
 };
 
-const NewPostForm = () => {
+const NewPostForm = ({ user }: { user: UserResponse }) => {
   const ref = useRef<HTMLTextAreaElement>(null);
 
   const [showCharCounter, setShowCharCounter] = useState(false);
@@ -43,9 +44,9 @@ const NewPostForm = () => {
     if (!ref.current) return;
     const data: Post = {
       id: -1,
-      userId: 2,
+      userId: user.id,
       content: ref.current.value,
-      User: { id: 2, avatar: null, username: "Lama" },
+      User: { id: user.id, avatar: user.avatar, username: user.username },
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     };
@@ -57,7 +58,12 @@ const NewPostForm = () => {
     }
   };
 
-  if (createPost.isError && createPost.error) toast(createPost.error.message);
+  useEffect(() => {
+    if (createPost.isError) {
+      toast.error(createPost.error.message);
+    }
+  }, [createPost.isError, createPost.error?.message]);
+
   return (
     <form onSubmit={handleSubmission} className="flex flex-col w-full">
       <textarea
