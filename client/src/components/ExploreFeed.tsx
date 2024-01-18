@@ -49,7 +49,7 @@ const ExploreFeed = () => {
             </div>
             {post.userId === user?.id ? (
               <div className="hover-effect text-2xl">
-                <PostDropdown postId={post.id} />
+                <PostDropdown userId={user.id} postId={post.id} />
               </div>
             ) : (
               ""

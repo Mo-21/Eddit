@@ -1,6 +1,6 @@
 // prettier-ignore
 import { useInfiniteQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { Post, createPosts } from "../services/postService";
+import { Post, post } from "../services/postService";
 import axios from "axios";
 
 interface NewPostContext {
@@ -44,7 +44,7 @@ export const useCreatePost = (clearText: () => void) => {
 
   return useMutation<Post, Error, Post, NewPostContext>({
     mutationKey: ["posts"],
-    mutationFn: createPosts.createPost,
+    mutationFn: post.createPost,
     onMutate: async (newPostData) => {
       const previousData = queryClient.getQueryData<QueryData>(["posts"]) || {
         pageParam: [1],
