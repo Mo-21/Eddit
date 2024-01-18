@@ -17,7 +17,7 @@ const ExploreFeed = () => {
     isLoading,
     fetchNextPage,
     isFetchingNextPage,
-  } = useGetAllPosts({ pageSize });
+  } = useGetAllPosts(pageSize);
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>{error.message}</div>;
@@ -47,7 +47,7 @@ const ExploreFeed = () => {
               </div>
             </div>
             <div className="hover-effect text-2xl">
-              <PostDropdown />
+              <PostDropdown postId={post.id} />
             </div>
           </div>
           <p className="text-lg text-white">{post.content}</p>
