@@ -1,16 +1,16 @@
 import APIClient from "./APIClient";
 
 export interface Post {
-  id: number;
+  id: string;
   content: string;
-  userId: number;
+  userId: string;
   User: {
     avatar: string | null;
     username: string;
-    id: number;
+    id: string;
   };
   createdAt: string;
   updatedAt: string;
 }
 
-export const createPosts = new APIClient<Post, Post>("/post/create");
+export const post = new APIClient<Post, Post>("/post");

@@ -1,8 +1,12 @@
 import { MdMoreHoriz, MdDeleteOutline, FaRegEdit } from "../assets";
-import { useGetAllPosts } from "../hooks";
-import useAuth from "../services/store";
+import { post } from "../services/postService";
 
-const PostDropdown = ({ postId }: { postId: number }) => {
+interface PostActionsProps {
+  postId: string;
+  userId: string;
+}
+
+const PostDropdown = ({ postId, userId }: PostActionsProps) => {
   return (
     <div className="dropdown dropdown-left hover:font-normal">
       <MdMoreHoriz tabIndex={0} />
@@ -11,7 +15,7 @@ const PostDropdown = ({ postId }: { postId: number }) => {
         className="dropdown-content z-[1] list-none shadow rounded-box w-52 bg-gray-800 p-0"
       >
         <li className="p-3 rounded-lg hover:bg-gray-950">
-          <DeletePostButton postId={postId} />
+          <DeletePostButton userId={userId} postId={postId} />
         </li>
         <li className="p-3 rounded-lg hover:bg-gray-950">
           <div className="flex gap-2 items-center text-green-500 text-lg">
@@ -24,7 +28,7 @@ const PostDropdown = ({ postId }: { postId: number }) => {
   );
 };
 
-const DeletePostButton = ({ postId }: { postId: number }) => {
+const DeletePostButton = ({ postId, userId }: PostActionsProps) => {
   return (
     <>
       <button
@@ -41,12 +45,20 @@ const DeletePostButton = ({ postId }: { postId: number }) => {
       </button>
       <dialog id="delete_post_modal" className="modal">
         <div className="modal-box w-11/12 max-w-5xl">
-          <h3 className="font-bold text-lg">Hello!</h3>
-          <p className="py-4">Click the button below to close</p>
+          <h3 className="font-bold">Hello!</h3>
+          <p className="py-4">Do you really want to delete this tweet?</p>
           <div className="modal-action">
             <form method="dialog">
-              {/* if there is a button, it will close the modal */}
-              <button className="btn">Close</button>
+              <button className="btn text-lg">No</button>
+              <button
+                onClick={() => {
+                  post.deletePost(postId, userId);
+                  window.location.reload();
+                }}
+                className="btn bg-red-800 text-lg"
+              >
+                Yes
+              </button>
             </form>
           </div>
         </div>
