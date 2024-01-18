@@ -7,10 +7,6 @@ interface NewPostContext {
   previousPosts: Post[];
 }
 
-interface PostQuery {
-  pageSize: number;
-}
-
 interface InfinitePosts {
   posts: Post[];
   hasMore: boolean;
@@ -21,15 +17,16 @@ interface QueryData {
   pages: InfinitePosts[];
 }
 
-export const useGetAllPosts = (query: PostQuery) =>
+export const useGetAllPosts = (pageSize: number, userId?: number) =>
   useInfiniteQuery<InfinitePosts, Error, Post[]>({
-    queryKey: ["posts"],
+    queryKey: userId ? ["posts", userId] : ["posts"],
     queryFn: async ({ pageParam }) => {
       return await axios
         .get("/api/post/all", {
           params: {
             page: pageParam,
-            pageSize: query.pageSize,
+            pageSize,
+            userId,
           },
         })
         .then((res) => res.data);
