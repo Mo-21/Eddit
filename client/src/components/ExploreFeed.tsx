@@ -7,6 +7,7 @@ import classNames from "classnames";
 import { useGetAllPosts } from "../hooks";
 import { Link } from "react-router-dom";
 import PostDropdown from "./PostDropdown";
+import useAuth from "../services/store";
 
 const ExploreFeed = () => {
   const pageSize = 5;
@@ -19,9 +20,9 @@ const ExploreFeed = () => {
     isFetchingNextPage,
   } = useGetAllPosts(pageSize);
 
+  const { user } = useAuth();
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>{error.message}</div>;
-
   return (
     <div>
       {posts?.map((post, index) => (
@@ -46,9 +47,13 @@ const ExploreFeed = () => {
                 @{post.User.username} <LuDot /> {getTwitterTime(post.createdAt)}
               </div>
             </div>
-            <div className="hover-effect text-2xl">
-              <PostDropdown postId={post.id} />
-            </div>
+            {post.userId === user?.id ? (
+              <div className="hover-effect text-2xl">
+                <PostDropdown postId={post.id} />
+              </div>
+            ) : (
+              ""
+            )}
           </div>
           <p className="text-lg text-white">{post.content}</p>
           <PostActions />
