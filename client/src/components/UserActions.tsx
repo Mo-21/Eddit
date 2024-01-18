@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { IoPersonOutline, MdMoreHoriz, TbLogout2 } from "../assets";
 import { useLogout } from "../hooks/useAuth";
+import defaultAvatar from "../assets/default-twitter-avatar.png";
 import useAuth from "../services/store";
 
 const UserActions = () => {
@@ -16,13 +17,13 @@ const UserActions = () => {
       >
         <div className="avatar">
           <div className="w-20 rounded-full">
-            <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+            <img src={user.avatar || defaultAvatar} />
           </div>
         </div>
         <div className="flex justify-between items-center w-full">
           <div className="flex flex-col text-lg">
-            <div>Lama</div>
-            <div className="text-gray-500">@Lama</div>
+            <div>{user.username}</div>
+            <div className="text-gray-500">@{user.username}</div>
           </div>
           <div className="mr-3 text-2xl">
             <MdMoreHoriz />
