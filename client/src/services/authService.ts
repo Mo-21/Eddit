@@ -1,7 +1,7 @@
 import APIClient from "./APIClient";
 
 export interface UserResponse {
-  id: number;
+  id: string;
   username: string;
   email: string;
   avatar: string | null;
@@ -25,3 +25,5 @@ export const login = new APIClient<Credentials, UserResponse>("/auth/login")
 export const register = new APIClient<RegistrationData, UserResponse>(
   "/auth/register"
 ).register;
+
+export const logout = new APIClient("/auth/logout").logout;

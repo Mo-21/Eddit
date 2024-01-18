@@ -3,6 +3,7 @@ import {
   Credentials,
   UserResponse,
   RegistrationData,
+  logout,
 } from "../services/authService";
 import { login, register } from "../services/authService";
 import { useNavigate } from "react-router-dom";
@@ -43,5 +44,12 @@ export const useRegister = () => {
 export const useLogout = () => {
   const queryClient = useQueryClient();
   const { removeUser } = useAuth();
-  return { queryClient, removeUser };
+
+  const logoutUser = () => {
+    queryClient.clear();
+    removeUser();
+    logout();
+  };
+
+  return logoutUser;
 };

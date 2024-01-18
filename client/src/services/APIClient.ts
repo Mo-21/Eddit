@@ -15,6 +15,10 @@ class APIClient<T, R> {
     return axiosInstance.post<R>(this.endpoint, data).then((res) => res.data);
   };
 
+  logout = () => {
+    return axiosInstance.get<R>(this.endpoint).then((res) => res.data);
+  };
+
   createPost = (data: T) => {
     const createUrl = `${this.endpoint}/create`;
 

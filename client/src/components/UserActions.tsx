@@ -5,8 +5,8 @@ import defaultAvatar from "../assets/default-twitter-avatar.png";
 import useAuth from "../services/store";
 
 const UserActions = () => {
-  const { queryClient, removeUser } = useLogout();
   const { user } = useAuth();
+  const logout = useLogout();
   if (!user) return null;
 
   return (
@@ -35,17 +35,7 @@ const UserActions = () => {
         className="dropdown-content w-full z-[1] menu p-2 mb-2 shadow rounded-box box text-lg"
       >
         <li>
-          <Link
-            onClick={() => {
-              queryClient.clear();
-              removeUser();
-            }}
-            className="flex items-center text-red-500"
-            to="/auth"
-          >
-            <TbLogout2 />
-            Logout
-          </Link>
+          <Logout logout={logout} />
         </li>
         <li>
           <Link to="/profile">
@@ -55,6 +45,19 @@ const UserActions = () => {
         </li>
       </ul>
     </div>
+  );
+};
+
+const Logout = ({ logout }: { logout: () => void }) => {
+  return (
+    <Link
+      onClick={() => logout()}
+      className="flex items-center text-red-500"
+      to="/auth"
+    >
+      <TbLogout2 />
+      Logout
+    </Link>
   );
 };
 
