@@ -12,7 +12,7 @@ const PostDropdown = ({ postId, userId }: PostActionsProps) => {
       <MdMoreHoriz tabIndex={0} />
       <ul
         tabIndex={0}
-        className="dropdown-content z-[1] list-none shadow rounded-box w-52 bg-gray-800 p-0"
+        className="dropdown-content z-[1] list-none shadow rounded-box w-52 bg-[#18191B] p-0"
       >
         <li className="p-3 rounded-lg hover:bg-gray-950">
           <DeletePostButton userId={userId} postId={postId} />
