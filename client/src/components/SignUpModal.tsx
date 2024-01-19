@@ -5,6 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import ErrorMessage from "./ErrorMessage";
 import { useRegister } from "../hooks/useAuth";
 import toast, { Toaster } from "react-hot-toast";
+import UserAvatarUpload from "./UserAvatarUpload";
 
 const SignUpModal = (id: HTMLAttributes<string | undefined>) => {
   return (
@@ -36,6 +37,7 @@ const SignUpForm = () => {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<SignUpSchemaType>({
     resolver: zodResolver(signUpSchema),
@@ -56,12 +58,7 @@ const SignUpForm = () => {
         )}
         className="flex flex-col w-full items-start gap-6"
       >
-        {/* <input
-        {...register("avatar")}
-        type="file"
-        className="file-input w-full max-w-xs"
-      /> */}
-
+        <UserAvatarUpload setValue={setValue} />
         <input
           {...register("username")}
           placeholder="Username"
@@ -69,7 +66,6 @@ const SignUpForm = () => {
           className="input-field-styled"
         />
         <ErrorMessage children={errors.username?.message} />
-
         <input
           {...register("email")}
           placeholder="Email"
@@ -77,7 +73,6 @@ const SignUpForm = () => {
           className="input-field-styled"
         />
         <ErrorMessage children={errors.email?.message} />
-
         <input
           {...register("password")}
           placeholder="Password"
@@ -85,7 +80,6 @@ const SignUpForm = () => {
           className="input-field-styled"
         />
         <ErrorMessage children={errors.password?.message} />
-
         <input
           {...register("passwordConfirmation")}
           placeholder="Confirm password"
@@ -95,7 +89,6 @@ const SignUpForm = () => {
         {errors.passwordConfirmation && (
           <ErrorMessage children={errors.passwordConfirmation.message} />
         )}
-
         <button
           disabled={registerUser.isPending}
           type="submit"
