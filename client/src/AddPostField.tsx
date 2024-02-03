@@ -43,7 +43,7 @@ const NewPostForm = ({ user }: { user: UserResponse }) => {
     e.preventDefault();
     if (!ref.current) return;
     const data: Post = {
-      id: -1,
+      id: "-1",
       userId: user.id,
       content: ref.current.value,
       User: { id: user.id, avatar: user.avatar, username: user.username },
