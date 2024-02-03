@@ -4,28 +4,28 @@ import defaultAvatar from "../assets/default-twitter-avatar.png";
 import { getTwitterTime } from "twitter-time";
 import { cloneElement } from "react";
 import classNames from "classnames";
-import { useGetAllPosts } from "../hooks";
 import { Link } from "react-router-dom";
 import PostDropdown from "./PostDropdown";
 import useAuth from "../services/store";
+import { Post } from "../services/postService";
 
-const ExploreFeed = () => {
-  const pageSize = 5;
-  const {
-    data: posts,
-    hasNextPage,
-    error,
-    isLoading,
-    fetchNextPage,
-    isFetchingNextPage,
-  } = useGetAllPosts(pageSize);
+interface Props {
+  posts: Post[] | undefined;
+  hasNextPage: boolean;
+  error: Error | null;
+  isLoading: boolean;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  fetchNextPage: any;
+  isFetchingNextPage: boolean;
+}
 
+const Posts = ({ props }: { props: Props }) => {
   const { user } = useAuth();
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>{error.message}</div>;
+  if (props.isLoading) return <div>Loading...</div>;
+  if (props.error) return <div>{props.error.message}</div>;
   return (
     <div>
-      {posts?.map((post) => (
+      {props.posts?.map((post) => (
         <div
           style={{ borderBottomWidth: "1px" }}
           className="prose border-gray-700 p-3 min-w-full"
@@ -60,14 +60,14 @@ const ExploreFeed = () => {
         </div>
       ))}
 
-      {hasNextPage && (
+      {props.hasNextPage && (
         <div className="flex">
           <button
-            disabled={isFetchingNextPage}
+            disabled={props.isFetchingNextPage}
             className="btn flex-grow"
-            onClick={() => fetchNextPage()}
+            onClick={() => props.fetchNextPage()}
           >
-            {isFetchingNextPage ? "Loading..." : "Load More"}
+            {props.isFetchingNextPage ? "Loading..." : "Load More"}
           </button>
         </div>
       )}
@@ -100,4 +100,4 @@ const PostActions = () => {
   return <div className="flex justify-between">{actionsWithClassName}</div>;
 };
 
-export default ExploreFeed;
+export default Posts;
