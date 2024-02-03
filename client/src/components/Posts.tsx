@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import PostDropdown from "./PostDropdown";
 import useAuth from "../services/store";
 import { Post } from "../services/postService";
+import axios from "axios";
 
 interface Props {
   posts: Post[] | undefined;
@@ -56,7 +57,7 @@ const Posts = ({ props }: { props: Props }) => {
             )}
           </div>
           <p className="text-lg text-white">{post.content}</p>
-          <PostActions />
+          <PostActions post={post} userId={user?.id} />
         </div>
       ))}
 
@@ -75,11 +76,31 @@ const Posts = ({ props }: { props: Props }) => {
   );
 };
 
-const PostActions = () => {
+interface PostActionsProps {
+  post: Post;
+  userId: string | undefined;
+}
+
+const PostActions = ({ post, userId }: PostActionsProps) => {
+  const likePost = async () => {
+    const data = {
+      userId,
+      postId: post.id,
+    };
+    try {
+      await axios.put(`/api/post/${post.id}/like`, data);
+    } catch (error) {
+      throw new Error("Something went wrong");
+    }
+  };
+
   const actions: JSX.Element[] = [
     <TbMessageCircle2 />,
     <FaRetweet />,
-    <GoHeart />,
+    <div onClick={likePost}>
+      <div>{post.likers.length}</div>
+      <GoHeart />
+    </div>,
     <IoIosStats />,
     <CgSoftwareUpload />,
   ];
@@ -89,7 +110,7 @@ const PostActions = () => {
       key: index,
       size: "1.6rem",
       className: classNames({
-        "hover-effect p-1": true,
+        "hover-effect p-1 flex items-center gap-2": true,
         "hover:bg-sky-700": index !== 1 && index !== 2,
         "hover:bg-green-600": index === 1,
         "hover:bg-rose-600": index === 2,

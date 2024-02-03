@@ -11,6 +11,9 @@ export interface Post {
   };
   createdAt: string;
   updatedAt: string;
+  likers: {
+    id: string;
+  }[];
 }
 
 export const post = new APIClient<Post, Post>("/post");
