@@ -25,7 +25,7 @@ const ExploreFeed = () => {
   if (error) return <div>{error.message}</div>;
   return (
     <div>
-      {posts?.map((post, index) => (
+      {posts?.map((post) => (
         <div
           style={{ borderBottomWidth: "1px" }}
           className="prose border-gray-700 p-3 min-w-full"
@@ -36,7 +36,7 @@ const ExploreFeed = () => {
               <Link to="/profile">
                 <img
                   className="rounded-full w-12"
-                  src={defaultAvatar}
+                  src={post.User.avatar || defaultAvatar}
                   alt="defaultAvatar"
                 />
               </Link>
