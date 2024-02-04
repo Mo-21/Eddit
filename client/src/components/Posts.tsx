@@ -2,7 +2,7 @@
 import { CgSoftwareUpload, FaRetweet, GoHeart, IoIosStats, LuDot, TbMessageCircle2 } from "../assets";
 import defaultAvatar from "../assets/default-twitter-avatar.png";
 import { getTwitterTime } from "twitter-time";
-import { cloneElement } from "react";
+import { cloneElement, useState } from "react";
 import classNames from "classnames";
 import { Link } from "react-router-dom";
 import PostDropdown from "./PostDropdown";
@@ -82,7 +82,21 @@ interface PostActionsProps {
 }
 
 const PostActions = ({ post, userId }: PostActionsProps) => {
+  const [likes, setLikes] = useState(post.likers.length);
+  const [liked, setLiked] = useState<boolean>(
+    post.likers.includes({ id: userId ? userId : "-1" })
+  );
+
+  if (!userId) return;
+
   const likePost = async () => {
+    if (liked) {
+      setLiked(false);
+      setLikes(likes - 1);
+    } else {
+      setLiked(true);
+      setLikes(likes + 1);
+    }
     const data = {
       userId,
       postId: post.id,
@@ -98,7 +112,7 @@ const PostActions = ({ post, userId }: PostActionsProps) => {
     <TbMessageCircle2 />,
     <FaRetweet />,
     <div onClick={likePost}>
-      <div>{post.likers.length}</div>
+      <div>{likes}</div>
       <GoHeart />
     </div>,
     <IoIosStats />,
