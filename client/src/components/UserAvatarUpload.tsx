@@ -29,7 +29,7 @@ const UserAvatarUpload = ({ setValue }: RegisterAvatar) => {
       console.log(fileRef.current.files);
       const fileData = fileRef.current.files[0];
       const result = await uploadFile(fileData, {
-        publicKey: "779e3086abee96cc34f1",
+        publicKey: import.meta.env.VITE_UPLOADCARE_PUBLIC_KEY,
         store: "auto",
         metadata: {
           subsystem: "js-client",
