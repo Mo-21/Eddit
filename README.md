@@ -4,6 +4,8 @@ Eddit is a minimalist clone of Twitter, focusing on core features like user regi
 
 ![auth-wall](./screenshots/eddit-sign-in.png)
 
+To examine the server code please see [Eddit-Server](https://github.com/Mo-21/Eddit-Server)
+
 ## Features
 
 - User registration and authentication
